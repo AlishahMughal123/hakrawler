@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-        "net/url"
 	"net/http/httputil"
+	"net/url"
 	"os"
 	"strings"
 	"sync"
@@ -34,7 +34,7 @@ func banner(au aurora.Aurora) {
 func main() {
 	conf := config.NewConfig()
 	// define and parse command line flags
-	flag.StringVar(&conf.Url, "url", "", "The url that you wish to crawl, e.g. google.com or https://example.com. Schema defaults to http")
+	flag.StringVar(&conf.Url, "u", "", "The url that you wish to crawl, e.g. google.com or https://example.com. Schema defaults to http")
 	flag.IntVar(&conf.Depth, "depth", 1, "Maximum depth to crawl, the default is 1. Anything above 1 will include URLs from robots, sitemap, waybackurls and the initial crawler as a seed. Higher numbers take longer but yield more results.")
 	flag.StringVar(&conf.Outdir, "outdir", "", "Directory to save discovered raw HTTP requests")
 	flag.StringVar(&conf.Cookie, "cookie", "", "The value of this will be included as a Cookie header")
@@ -42,7 +42,7 @@ func main() {
 	flag.StringVar(&conf.Headers, "headers", "", "Headers to add in all requests. Multiple should be separated by semi-colon, e.g. HeaderOne: ValueOne;HeaderTwo: ValueTwo")
 	flag.StringVar(&conf.Scope, "scope", "subs", "Scope to include:\nstrict = specified domain only\nsubs = specified domain and subdomains\nyolo = everything")
 	flag.BoolVar(&conf.Wayback, "usewayback", false, "Query wayback machine for URLs and add them as seeds for the crawler")
-	flag.BoolVar(&conf.Plain, "plain", false, "Don't use colours or print the banners to allow for easier parsing")
+	flag.BoolVar(&conf.Plain, "plain", true, "Don't use colours or print the banners to allow for easier parsing")
 	flag.BoolVar(&conf.Nocolor, "nocolor", false, "Print the banners but without ANSI color codes")
 	flag.BoolVar(&conf.Runlinkfinder, "linkfinder", false, "Run linkfinder on javascript files.")
 
@@ -85,7 +85,6 @@ func main() {
 	}
 
 	stdout := bufio.NewWriter(os.Stdout)
-
 
 	// c := collector.NewCollector(&conf, au, stdout)
 
